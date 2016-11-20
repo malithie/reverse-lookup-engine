@@ -1,0 +1,155 @@
+<PolicySet xmlns="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17"  PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable" PolicySetId="DutyFreeAllowances" Version="1.0">
+    <Target></Target>
+    <Policy PolicyId="DutyFreeAllowancesForForeigner" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:permit-overrides" Version="1.0">
+        <Target>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">foreigner</AttributeValue>
+                        <AttributeDesignator AttributeId="citizenship" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+        </Target>
+        <Rule Effect="Permit" RuleId="WineLiquorAllowanceForForeigners">
+            <Target>
+                <AnyOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">wine</AttributeValue>
+                            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">liquor</AttributeValue>
+                            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                </AnyOf>
+                <AnyOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:double-greater-than-or-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#double">1.5</AttributeValue>
+                            <AttributeDesignator AttributeId="volume" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#double" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                </AnyOf>
+            </Target>
+        </Rule>
+        <Rule Effect="Permit" RuleId="AllowedItemAllowanceForForeigners">
+            <Target>
+                <AnyOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">allowedItems</AttributeValue>
+                            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                </AnyOf>
+                <AnyOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">250</AttributeValue>
+                            <AttributeDesignator AttributeId="value" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                </AnyOf>
+            </Target>
+        </Rule>
+        <Rule Effect="Deny" RuleId="AccessDenyForForeigner"></Rule>
+    </Policy>
+    <Policy PolicyId="DutyFreeAllowancesForResidents" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:permit-overrides" Version="1.0">
+        <Target>
+            <AnyOf>
+                <AllOf>
+                    <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                        <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">local</AttributeValue>
+                        <AttributeDesignator AttributeId="citizenship" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+                    </Match>
+                </AllOf>
+            </AnyOf>
+        </Target>
+        <Rule Effect="Permit" RuleId="WineAllowanceForResidents">
+            <Target>
+                <AnyOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">wine</AttributeValue>
+                            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:double-greater-than-or-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#double">2</AttributeValue>
+                            <AttributeDesignator AttributeId="volume" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#double" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                </AnyOf>
+            </Target>
+        </Rule>
+        <Rule Effect="Permit" RuleId="LiquorAllowanceForResidents">
+            <Target>
+                <AnyOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">liquor</AttributeValue>
+                            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:double-greater-than-or-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#double">2.5</AttributeValue>
+                            <AttributeDesignator AttributeId="volume" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#double" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                </AnyOf>
+            </Target>
+        </Rule>
+        <Rule Effect="Permit" RuleId="AllowedItemAllowance">
+            <Target>
+                <AnyOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">allowedItems</AttributeValue>
+                            <AttributeDesignator AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                </AnyOf>
+                <AnyOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">90</AttributeValue>
+                            <AttributeDesignator AttributeId="stay" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">250</AttributeValue>
+                            <AttributeDesignator AttributeId="value" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:integer-less-than">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">90</AttributeValue>
+                            <AttributeDesignator AttributeId="stay" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">365</AttributeValue>
+                            <AttributeDesignator AttributeId="stay" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">625</AttributeValue>
+                            <AttributeDesignator AttributeId="value" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                    <AllOf>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:integer-less-than">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">365</AttributeValue>
+                            <AttributeDesignator AttributeId="stay" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                        <Match MatchId="urn:oasis:names:tc:xacml:1.0:function:integer-greater-than-or-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#integer">1750</AttributeValue>
+                            <AttributeDesignator AttributeId="value" Category="urn:oasis:names:tc:xacml:3.0:attribute-category:resource" DataType="http://www.w3.org/2001/XMLSchema#integer" MustBePresent="true"></AttributeDesignator>
+                        </Match>
+                    </AllOf>
+                </AnyOf>
+            </Target>
+        </Rule>
+        <Rule Effect="Deny" RuleId="AccessDenyForLocal"></Rule>
+    </Policy>
+</PolicySet>
